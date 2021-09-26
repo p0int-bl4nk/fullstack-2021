@@ -54,7 +54,7 @@ const Weather = ({capital}) => {
         setIsLoading(false);
         console.log('weather api error', error);
       })
-  }, []);
+  }, [capital]);
 
   return (
     <div>
