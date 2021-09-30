@@ -1,0 +1,21 @@
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+  "name": "wrfv",
+  "number": "245-24f"
+}
+
+###
+DELETE http://localhost:3001/api/persons/568783
+Accept: application/json
+
+###
+GET http://localhost:3001/api/persons
+Accept: application/json
+
+###
+GET http://localhost:3001/api/persons/2
+Accept: application/json
+
+###
