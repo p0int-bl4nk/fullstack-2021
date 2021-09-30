@@ -1,6 +1,19 @@
 const express = require('express');
+const morgan = require('morgan');
 const app = express();
 app.use(express.json());
+
+const logger = morgan(function (tokens, req, res) {
+  return [
+    tokens.method(req, res),
+    tokens.url(req, res),
+    tokens.status(req, res),
+    tokens.res(req, res, 'content-length'), '-',
+    tokens['response-time'](req, res), 'ms',
+    `${JSON.stringify(req.body)}`
+  ].join(' ')
+});
+app.use(logger);
 
 let persons = [
   {
@@ -35,6 +48,16 @@ const generateId = () => {
     }
   }
 }
+
+/*const loggerMiddleware = (req, res, next) => {
+  console.log('Method:', req.method);
+  console.log('Path:', req.path);
+  console.log('Body:', req.body);
+  console.log('---');
+  next();
+}
+
+app.use(loggerMiddleware);*/
 
 app.get('/info', (req, res) => {
   const response = `
