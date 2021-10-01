@@ -1,6 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 const logger = morgan(function (tokens, req, res) {
@@ -48,16 +50,6 @@ const generateId = () => {
     }
   }
 }
-
-/*const loggerMiddleware = (req, res, next) => {
-  console.log('Method:', req.method);
-  console.log('Path:', req.path);
-  console.log('Body:', req.body);
-  console.log('---');
-  next();
-}
-
-app.use(loggerMiddleware);*/
 
 app.get('/info', (req, res) => {
   const response = `
@@ -118,7 +110,7 @@ app.post('/api/persons', (req, res) => {
   res.json(newPerson);
 });
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);

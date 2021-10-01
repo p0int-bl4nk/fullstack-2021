@@ -10,10 +10,9 @@ const DisplayPhoneBook = ({list, setList, setNotification}) => {
       phonebookService
         .deletePerson(id)
         .then(() => {
-          console.log('deleted');
           setList(list.filter(person => person.id !== id));
 
-          phonebookService
+          notificationService
             .handleNotification({
               message: `'${toDelete.name}' has been deleted.`,
               type: 'success'
@@ -22,7 +21,7 @@ const DisplayPhoneBook = ({list, setList, setNotification}) => {
         .catch(error => {
           console.log('delete service error:', error);
 
-          phonebookService
+          notificationService
             .handleNotification({
               message: `'${toDelete.name}' has already been removed from the server.`,
               type: 'error'
@@ -75,7 +74,6 @@ const AddNewNumber = ({list, setList, setNotification}) => {
       ) ? 'update' : 'discard';
     }
     const newPerson = {
-      id: list.length + 1,
       name: newName,
       number: newNumber
     };
