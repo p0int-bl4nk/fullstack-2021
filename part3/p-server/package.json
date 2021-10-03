@@ -1,0 +1,26 @@
+{
+  "name": "p-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "build:ui": "sudo rm -rf build && cd ../fullstack-2021/part2/phonebook && npm run build --prod && cp -r build ../../../p-server",
+    "deploy": "git push heroku master",
+    "deploy:full": "npm run build:ui && git commit -am uibuild && npm run deploy",
+    "logs:prod": "heroku logs --tail"
+  },
+  "keywords": [],
+  "author": "Sachin Verma",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "cors": "^2.8.5"
+  }
+}
