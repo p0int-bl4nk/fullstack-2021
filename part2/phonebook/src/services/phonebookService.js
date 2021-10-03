@@ -1,21 +1,21 @@
 import axios from "axios";
 
-const baseUrl = 'https://young-reaches-34491.herokuapp.com/api';
+const baseUrl = '/api/persons';
 
 const getAll = () => {
-  return axios.get(`${baseUrl}/persons`).then(response => response.data);
+  return axios.get(`${baseUrl}`).then(response => response.data);
 }
 
 const update = (id, updatedData) => {
-  return axios.put(`${baseUrl}/persons/${id}`, updatedData).then(response => response.data);
+  return axios.put(`${baseUrl}/${id}`, updatedData).then(response => response.data);
 }
 
 const create = (newData) => {
-  return axios.post(`${baseUrl}/persons`, newData).then(response => response.data);
+  return axios.post(`${baseUrl}`, newData).then(response => response.data);
 }
 
 const deletePerson = (id) => {
-  return axios.delete(`${baseUrl}/persons/${id}`);
+  return axios.delete(`${baseUrl}/${id}`);
 }
 
 const phonebookService = {getAll, update, create, deletePerson};
