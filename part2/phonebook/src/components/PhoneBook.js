@@ -83,14 +83,20 @@ const AddNewNumber = ({list, setList, setNotification}) => {
         .create(newPerson)
         .then((data) => {
           setList(prev => prev.concat(data));
-
           notificationService
             .handleNotification({
               message: `'${newName}' is successfully added to the phonebook.`,
               type: 'success'
             }, setNotification);
         })
-        .catch((error) => console.log('create service error:', error));
+        .catch((error) => {
+          console.log('create service error:', error.response);
+          notificationService
+            .handleNotification({
+              message: error.response.data.error,
+              type: 'error'
+            }, setNotification);
+        });
     } else if (operation === 'update') {
       phonebookService
         .update(person.id, newPerson)
@@ -103,7 +109,14 @@ const AddNewNumber = ({list, setList, setNotification}) => {
             type: 'success'
           }, setNotification);
         })
-        .catch((error) => console.log('update service error:', error));
+        .catch((error) => {
+          console.log('update service error:', error);
+          notificationService
+            .handleNotification({
+              message: error.response.data.error,
+              type: 'error'
+            }, setNotification);
+        });
     } else {
       return;
     }
