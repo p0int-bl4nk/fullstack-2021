@@ -26,13 +26,25 @@ const List = ({list, setSelected}) => {
 }
 
 const Country = ({country}) => {
-  //TODO: country fields
   return (
     <div>
       <h2>{country.name}</h2>
       <span>
         <p>Capital: {country.capital}</p>
+        <p>Population: {country.population}</p>
       </span>
+      <h3>Languages</h3>
+      <ul>
+        {
+          country.languages.map((lang, index) => <li key={index}>{lang.name}</li>)
+        }
+      </ul>
+      <img
+        src={country.flag}
+        alt={country.name}
+        width={120}
+        height={80}
+      />
       <Weather capital={country.capital}/>
     </div>
   );
@@ -79,9 +91,9 @@ const App = () => {
   const [countries, setCountries] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://api.countrylayer.com/v2/all?access_key=${process.env.REACT_APP_COUNTRY_API_KEY}`)
-      // .get('http://localhost:3001/countries')
+      .get(`https://restcountries.com/v2/all`)
       .then((response) => {
+        // console.log('response', response);
         setCountries(response.data);
       })
       .catch((error) => {
