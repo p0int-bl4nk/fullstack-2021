@@ -1,22 +1,22 @@
-import {useState} from "react";
+import React, { useState } from 'react'
 
 const NewBlog = (props) => {
-  const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
-  const [url, setUrl] = useState('');
+  const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
+  const [url, setUrl] = useState('')
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     const newBlog = {
       title,
       author,
       url
-    };
+    }
 
-    setAuthor('');
-    setTitle('');
-    setUrl('');
-    props.createNewBlog(newBlog);
+    setAuthor('')
+    setTitle('')
+    setUrl('')
+    props.createNewBlog(newBlog)
   }
 
   return (
@@ -28,7 +28,7 @@ const NewBlog = (props) => {
           type='text'
           name='title'
           value={title}
-          onChange={({target}) => setTitle(target.value)}
+          onChange={({ target }) => setTitle(target.value)}
         />
         <br/>
         <label htmlFor='author'>Author: </label>
@@ -36,7 +36,7 @@ const NewBlog = (props) => {
           type='text'
           name='author'
           value={author}
-          onChange={({target}) => setAuthor(target.value)}
+          onChange={({ target }) => setAuthor(target.value)}
         />
         <br/>
         <label htmlFor='url'>Url: </label>
@@ -44,7 +44,7 @@ const NewBlog = (props) => {
           type='url'
           name='url'
           value={url}
-          onChange={({target}) => setUrl(target.value)}
+          onChange={({ target }) => setUrl(target.value)}
         />
         <br/>
         <button type='submit'>Create</button>
@@ -53,4 +53,4 @@ const NewBlog = (props) => {
   )
 }
 
-export default NewBlog;
+export default NewBlog

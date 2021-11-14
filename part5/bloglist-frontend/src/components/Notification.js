@@ -1,4 +1,6 @@
-export default function Notification({notification}) {
+import React from 'react'
+
+const Notification = ({ notification }) => {
   const styles = {
     error: {
       color: 'red',
@@ -18,14 +20,17 @@ export default function Notification({notification}) {
       padding: 10,
       marginBottom: 10
     }
-  };
+  }
 
-  if (!notification?.message) {
-    return null;
+  if (notification && !notification['message']) {
+    return null
   }
   return (
-    <div style={notification?.type === 'error' ? styles.error : styles.success}>
-      {notification?.message}
+    <div style={notification['type'] === 'error' ? styles.error : styles.success}>
+      {notification['message']}
     </div>
-  );
+  )
 }
+
+
+export default Notification

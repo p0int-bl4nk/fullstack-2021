@@ -6,5 +6,5 @@ const login = (userInfo) => {
   return request.then(response => response.data)
 }
 
-const loginService = { login };
-export default loginService;
+const loginService = { login }
+export default loginService

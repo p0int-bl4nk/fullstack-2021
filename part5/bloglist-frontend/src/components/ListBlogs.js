@@ -1,4 +1,5 @@
-import Blog from "./Blog";
+import React from 'react'
+import Blog from './Blog'
 
 const ListBlogs = ({ allBlogs, updateBlog, handleDelete }) => {
 
@@ -20,4 +21,4 @@ const ListBlogs = ({ allBlogs, updateBlog, handleDelete }) => {
   )
 }
 
-export default ListBlogs;
+export default ListBlogs

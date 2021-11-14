@@ -1,6 +1,6 @@
-import React from 'react';
-import Togglable from "./Togglable";
-const Blog = ({blog, handleLike, handleDelete}) => {
+import React from 'react'
+import Togglable from './Togglable'
+const Blog = ({ blog, handleLike, handleDelete }) => {
   const styles = {
     blog: {
       border: '1px solid black',
@@ -17,23 +17,23 @@ const Blog = ({blog, handleLike, handleDelete}) => {
       background: 'red',
       padding: 5,
     }
-  };
+  }
 
   const onDelete = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     if (
       window.confirm(`Remove blog '${blog.title}' by ${blog.author}?`)
     ) {
-      handleDelete(blog.id);
+      handleDelete(blog.id)
     }
   }
 
   const onLike = (event) => {
-    event.preventDefault();
-    const _blog = { ...blog };
-    _blog.likes = _blog.likes + 1;
-    _blog.user = _blog.user.id;
-    handleLike(_blog);
+    event.preventDefault()
+    const _blog = { ...blog }
+    _blog.likes = _blog.likes + 1
+    _blog.user = _blog.user.id
+    handleLike(_blog)
   }
 
   return (
@@ -66,7 +66,7 @@ const Blog = ({blog, handleLike, handleDelete}) => {
         Remove
       </button>
     </li>
-  );
+  )
 }
 
 export default Blog
