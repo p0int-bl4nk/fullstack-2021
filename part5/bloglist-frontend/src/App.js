@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import ListBlogs from './components/ListBlogs';
 import Login from './components/Login';
 import blogService from './services/blogs'
 import NewBlog from "./components/NewBlog";
 import Notification from "./components/Notification";
+import Togglable from "./components/Togglable";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
   const [notification, setNotification] = useState(null);
+  const noteFormRef = useRef();
 
   useEffect(() => {
     const user = window.localStorage.getItem('currentUserInfo');
@@ -37,6 +39,26 @@ const App = () => {
     );
   }
 
+  const handleNewBlog = async (newBlog) => {
+    let notification;
+    try {
+      const _newBlog = await blogService.create(newBlog);
+      setBlogs(prev => [...prev, _newBlog]);
+      notification = {
+        message: `A new blog "${newBlog.title}", by ${newBlog.author} was added.`,
+        type: 'success'
+      };
+      noteFormRef.current.toggleVisibility();
+    } catch (e) {
+      notification = {
+        message: e.response.data.error,
+        type: 'error',
+      };
+      console.log('create new blog failed, error:', e);
+    }
+    handleNotification(notification);
+  };
+
   return (
     <div>
       <Notification
@@ -44,15 +66,20 @@ const App = () => {
       />
       {
         !user
-        ? <Login setUser={setUser} handleNotification={handleNotification}/>
+        ? <Togglable buttonLabel={'Log In'}>
+            <Login setUser={setUser} handleNotification={handleNotification}/>
+          </Togglable>
         : <>
             <h2>Blogs</h2>
             <p>
               {user.name} logged in.
-              <button type='button' onClick={handleLogout}>Logout</button>
+              <button type='button' onClick={handleLogout}>
+                Logout
+              </button>
             </p>
-
-            <NewBlog updateBlogs={setBlogs} handleNotification={handleNotification}/>
+            <Togglable buttonLabel={'Create a blog'} ref={noteFormRef}>
+              <NewBlog createNewBlog={handleNewBlog}/>
+            </Togglable>
             <ListBlogs allBlogs={blogs} />
           </>
       }

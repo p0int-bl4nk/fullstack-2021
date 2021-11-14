@@ -22,7 +22,7 @@ const Login = ({ setUser, handleNotification }) => {
       setUser(loginResponse);
     } catch (e) {
       handleNotification({
-        message: 'Invalid username or password',
+        message: e.response.data.error,
         type: 'error',
       });
       console.log('login failed error:', e);
