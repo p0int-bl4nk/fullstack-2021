@@ -20,11 +20,12 @@ const App = () => {
 
   useEffect(() => {
     blogService.getAll()
-      .then(blogs =>
-        setBlogs( blogs )
-      )
+      .then(blogs => {
+        blogs.sort((a, b) => b.likes - a.likes);
+        setBlogs( blogs );
+      })
       .catch(err => console.log('getAll error:', err));
-  }, []);
+    }, []);
 
   const handleLogout = () => {
     window.localStorage.removeItem('currentUserInfo');
@@ -59,6 +60,39 @@ const App = () => {
     handleNotification(notification);
   };
 
+  const updateBlog = (blog) => {
+    blogService.update(blog)
+      .then(() => {
+        const _blogs = [...blogs];
+        const _blog = _blogs.find(b => b.id === blog.id);
+        _blog.likes = _blog.likes + 1;
+        setBlogs(_blogs);
+      })
+      .catch((error) => {
+        console.log('update api error', error);
+      });
+  }
+
+  const handleDelete = (id) => {
+    blogService.deleteBlog(id)
+      .then(() => {
+        const _blogs = blogs.filter(blog => blog.id !== id);
+        setBlogs(_blogs);
+
+        handleNotification({
+          message: 'Blog deleted successfully',
+          type: 'success'
+        });
+      })
+      .catch((error) => {
+        handleNotification({
+          message: error.response.data.error,
+          type: 'error'
+        });
+        console.log('handleDelete api error', error);
+      });
+  }
+
   return (
     <div>
       <Notification
@@ -80,7 +114,11 @@ const App = () => {
             <Togglable buttonLabel={'Create a blog'} ref={noteFormRef}>
               <NewBlog createNewBlog={handleNewBlog}/>
             </Togglable>
-            <ListBlogs allBlogs={blogs} />
+            <ListBlogs
+              allBlogs={blogs}
+              updateBlog={updateBlog}
+              handleDelete={handleDelete}
+            />
           </>
       }
     </div>
