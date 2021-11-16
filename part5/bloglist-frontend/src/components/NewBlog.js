@@ -22,11 +22,12 @@ const NewBlog = (props) => {
   return (
     <div>
       <h4>Create new</h4>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} id='createBlog'>
         <label htmlFor='title'>Title: </label>
         <input
           type='text'
           name='title'
+          id='title'
           value={title}
           onChange={({ target }) => setTitle(target.value)}
         />
@@ -35,6 +36,7 @@ const NewBlog = (props) => {
         <input
           type='text'
           name='author'
+          id='author'
           value={author}
           onChange={({ target }) => setAuthor(target.value)}
         />
@@ -43,6 +45,7 @@ const NewBlog = (props) => {
         <input
           type='url'
           name='url'
+          id='url'
           value={url}
           onChange={({ target }) => setUrl(target.value)}
         />

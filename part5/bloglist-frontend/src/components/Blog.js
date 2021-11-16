@@ -32,23 +32,23 @@ const Blog = ({ blog, handleLike, handleDelete }) => {
     event.preventDefault()
     const _blog = { ...blog }
     _blog.likes = _blog.likes + 1
-    _blog.user = _blog.user.id
+    _blog.user = _blog.user?.id
     handleLike(_blog)
   }
 
   return (
     <li style={styles.blog}>
       <div>
-        <span>
+        <span  id={`${blog.id}_heading`} className='header'>
           {blog.title}, <em>by</em> <strong>{blog.author}</strong>
         </span>
         <Togglable buttonLabel='View' closeButtonLabel='Hide'>
           <>
-            <span>
+            <span  id={`${blog.id}_url`} className='url'>
               <em>{blog.url}</em>
             </span>
             <br/>
-            <span>
+            <span id={`${blog.id}_like`} className='likes'>
               Likes: {blog.likes}{' '}
               <button type='button' onClick={onLike}>
                 Like
