@@ -96,7 +96,8 @@ const App = () => {
   return (
     <div>
       <Notification
-        notification={notification}
+        type={notification?.type}
+        message={notification?.message}
       />
       {
         !user

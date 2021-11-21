@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Notification = ({ notification }) => {
+const Notification = ({ type = '', message = '' }) => {
   const styles = {
     error: {
       color: 'red',
@@ -22,12 +22,12 @@ const Notification = ({ notification }) => {
     }
   }
 
-  if (notification && !notification['message']) {
+  if (!message) {
     return null
   }
   return (
-    <div style={notification['type'] === 'error' ? styles.error : styles.success}>
-      {notification['message']}
+    <div style={styles[`${type}`]}>
+      {message}
     </div>
   )
 }
