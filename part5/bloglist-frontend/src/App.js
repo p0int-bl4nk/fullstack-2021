@@ -5,7 +5,7 @@ import blogService from './services/blogs'
 import NewBlog from './components/NewBlog'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
-
+/* eslint-disable no-debugger */
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
@@ -14,8 +14,11 @@ const App = () => {
 
   useEffect(() => {
     const user = window.localStorage.getItem('currentUserInfo')
-    if (user)
-      setUser(user)
+    if (user) {
+      const parsedUser = JSON.parse(user)
+      setUser(parsedUser)
+      blogService.setToken(parsedUser.token)
+    }
   }, [])
 
   useEffect(() => {

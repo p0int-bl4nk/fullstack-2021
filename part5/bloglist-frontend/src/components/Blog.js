@@ -38,7 +38,7 @@ const Blog = ({ blog, handleLike, handleDelete }) => {
 
   return (
     <li style={styles.blog}>
-      <div>
+      <div className='blog' >
         <span  id={`${blog.id}_heading`} className='header'>
           {blog.title}, <em>by</em> <strong>{blog.author}</strong>
         </span>
@@ -62,6 +62,7 @@ const Blog = ({ blog, handleLike, handleDelete }) => {
         type='button'
         onClick={onDelete}
         style={styles.delete}
+        className='deleteBtn'
       >
         Remove
       </button>
