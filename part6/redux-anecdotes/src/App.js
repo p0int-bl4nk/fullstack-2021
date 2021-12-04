@@ -2,18 +2,14 @@ import React, {useEffect} from 'react'
 import AnecdoteForm from "./components/AnecdoteForm";
 import AnecdoteList from "./components/AnecdoteList";
 import Notification from "./components/Notification";
-import anecdotes from "./services/anecdotes";
-import store from "./store";
 import {actionInitAnecdotes} from "./reducers/anecdoteReducer";
+import {useDispatch} from "react-redux";
 
 const App = () => {
+  const dispatch = useDispatch()
   useEffect(() => {
-    anecdotes.getAll()
-      .then((data) => {
-        store.dispatch(actionInitAnecdotes(data))
-      })
-      .catch(error => console.error(error));
-  }, []);
+    dispatch(actionInitAnecdotes());
+  }, [dispatch]);
 
   return (
     <div>

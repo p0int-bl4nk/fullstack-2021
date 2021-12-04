@@ -12,9 +12,9 @@ const AnecdoteList = () => {
   )
   const dispatch = useDispatch()
 
-  const vote = ({id, content}) => {
-    dispatch(actionIncrementVote(id))
-    dispatch(actionShowNotification(`You voted '${content}'`))
+  const vote = (anecdote) => {
+    dispatch(actionIncrementVote(anecdote))
+    dispatch(actionShowNotification(`You voted '${anecdote.content}'`))
   }
 
   return (
