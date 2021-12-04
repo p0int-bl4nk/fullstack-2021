@@ -1,10 +1,11 @@
 
-import React from 'react'
+import React, {useState} from 'react'
 import {connect} from "react-redux";
 import {actionHideNotification} from "../reducers/notificationReducer";
 
 const Notification = (props) => {
 
+  const [timeoutId, setTimeoutId] = useState(null);
   const style = {
     border: 'solid',
     padding: 10,
@@ -13,8 +14,12 @@ const Notification = (props) => {
 
   if (!props.notification)
     return null;
-  else
-    setTimeout(() => props.actionHideNotification(), 3000);
+  else {
+    if (timeoutId) clearTimeout(timeoutId)
+    setTimeoutId(
+      () => setTimeout(() => props.actionHideNotification(), 3000)
+    )
+  }
 
   return (
     <div style={style}>
