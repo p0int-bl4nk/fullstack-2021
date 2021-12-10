@@ -17,22 +17,38 @@ const useField = (type) => {
 
 const useCountry = (name) => {
   const [country, setCountry] = useState(null)
+  const [isFetching, setIsFetching] = useState(null);
 
-  useEffect(() => {})
+  useEffect(() => {
+    if (!name) return null;
+    setIsFetching(true)
+    axios.get(`https://restcountries.com/v2/name/${name}?fullText=true`)
+      .then((response) => {
+        if (response.data.length)
+          setCountry({ data: response.data[0], found: true })
+        else
+          setCountry({ found: false })
+      })
+      .catch(e => console.log('country api error:', e))
+      .finally(() => setIsFetching(false));
+  }, [name]);
 
-  return country
+  return { country, isFetching }
 }
 
-const Country = ({ country }) => {
+const Country = ({ country, isFetching }) => {
+  if (isFetching)
+    return <h4>Loading...</h4>
+
   if (!country) {
     return null
   }
 
   if (!country.found) {
     return (
-      <div>
+      <h4>
         not found...
-      </div>
+      </h4>
     )
   }
 
@@ -49,13 +65,14 @@ const Country = ({ country }) => {
 const App = () => {
   const nameInput = useField('text')
   const [name, setName] = useState('')
-  const country = useCountry(name)
+  const { country, isFetching } = useCountry(name)
 
   const fetch = (e) => {
     e.preventDefault()
     setName(nameInput.value)
   }
 
+  console.log('country', country)
   return (
     <div>
       <form onSubmit={fetch}>
@@ -63,7 +80,7 @@ const App = () => {
         <button>find</button>
       </form>
 
-      <Country country={country} />
+      <Country country={country} isFetching={isFetching} />
     </div>
   )
 }
