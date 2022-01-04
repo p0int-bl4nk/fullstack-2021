@@ -1,5 +1,5 @@
 import blogService from '../services/blogs'
-import {actionShowNotification} from "./notificationReducer";
+import { actionShowNotification } from './notificationReducer'
 
 const blogReducer = (state = [], action) => {
   switch (action.type) {
@@ -47,7 +47,7 @@ export const actionAddBlog = (newBlog) => {
       })
       dispatch(actionShowNotification({
         type: 'success', message: `A new blog '${newBlog.title}' by ${newBlog.author} was added.`
-      }));
+      }))
     } catch (e) {
       console.log('getAll error:', e)
       dispatch(actionShowNotification({
@@ -66,7 +66,7 @@ export const actionDeleteBlog = (id) => {
         id
       })
       dispatch(actionShowNotification({
-        type: 'success', message: `Blog has been deleted.`
+        type: 'success', message: 'Blog has been deleted.'
       }))
     } catch (e) {
       console.log(e)

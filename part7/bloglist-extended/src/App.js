@@ -5,7 +5,7 @@ import Togglable from './components/Togglable'
 import React, { useEffect, useRef } from 'react'
 import NewBlog from './components/NewBlog'
 import ListBlogs from './components/ListBlogs'
-import {actionGetUserFromLocalStorage, actionLogout} from './reducers/userReducer'
+import { actionGetUserFromLocalStorage, actionLogout } from './reducers/userReducer'
 import { actionInitBlogs } from './reducers/blogReducer'
 
 const App = () => {
@@ -14,7 +14,7 @@ const App = () => {
   const blogFormRef = useRef()
   useEffect(() => {
     dispatch(actionGetUserFromLocalStorage())
-  }, []);
+  }, [])
 
   useEffect(() => {
     if (user.token)

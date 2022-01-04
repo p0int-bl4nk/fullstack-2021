@@ -1,19 +1,19 @@
-let timeoutId;
+let timeoutId
 const notificationReducer = (state = null, action) => {
   switch (action.type) {
-    case 'SHOW_NOTIFICATION':
-      return action.notification;
-    case 'HIDE_NOTIFICATION':
-      return null;
-    default:
-      return state;
+  case 'SHOW_NOTIFICATION':
+    return action.notification
+  case 'HIDE_NOTIFICATION':
+    return null
+  default:
+    return state
   }
 }
 
 export const actionShowNotification = (notification, ms = 5000) => {
   return async dispatch => {
-    if (timeoutId) clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => dispatch(actionHideNotification()), ms);
+    if (timeoutId) clearTimeout(timeoutId)
+    timeoutId = setTimeout(() => dispatch(actionHideNotification()), ms)
 
     dispatch({
       type: 'SHOW_NOTIFICATION',
@@ -28,4 +28,4 @@ export const actionHideNotification = () => {
   }
 }
 
-export default notificationReducer;
+export default notificationReducer
