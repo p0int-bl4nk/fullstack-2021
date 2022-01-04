@@ -38,7 +38,9 @@ blogsRouter.post('/', middleware.userExtractor, async (req, res) => {
       }
     }
   );
-
+  delete req.user.blogs;
+  savedBlog.user = req.user;
+  // console.log('save saved', savedBlog);
   res.status(201).json(savedBlog);
 });
 
@@ -55,7 +57,10 @@ blogsRouter.delete('/:id', middleware.userExtractor, async (req, res) => {
 });
 
 blogsRouter.put('/:id', async (req, res) => {
+  const user = req.body.user;
+  req.body.user = user.id;
   const response = await Blog.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  response.user = user;
   res.json(response);
 });
 
