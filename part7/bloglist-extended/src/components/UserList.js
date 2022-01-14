@@ -2,14 +2,12 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 const UserList = () => {
-  const list = useSelector(state => {
-
-    console.log(state.users)
-    return state.users.map(user => ({
+  const list = useSelector(state =>
+    state.users.map(user => ({
       name: user.name,
       blogCount: user.blogs.length
     }))
-  })
+  )
 
   const tableStyle = {
     border: '1px dashed black',

@@ -6,6 +6,12 @@ const usersReducer = (state = [], action) => {
     return action.payload
   case 'UPDATE_USER':
     return state.map(u => u.id === action.payload.id ? action.payload : u)
+  case 'ADD_BLOG':
+    return state.map(u => {
+      return u.id === action.data.user.id
+        ? { ...u, blogs: u.blogs.concat(action.data) }
+        : u
+    })
   default:
     return state
   }
