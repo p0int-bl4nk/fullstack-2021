@@ -35,7 +35,7 @@ const App = () => {
       <Notification />
       <Menu user={user} handleLogout={handleLogout}/>
       {
-        user?.name &&
+        user && user.name &&
         <>
           <h2>Blogs</h2>
           <Routes>
@@ -80,14 +80,14 @@ const Menu = ({ user, handleLogout }) => {
       <Link style={padding} to='/users'>Users</Link>
       &nbsp;
       {
-        user?.name
-        ? <span>
+        user && user.name
+          ? <span>
             { user.name } logged in.
             <button type="button" onClick={handleLogout}>
               Logout
             </button>
           </span>
-        : <Togglable buttonLabel={'Log In'}>
+          : <Togglable buttonLabel={'Log In'}>
             <Login/>
           </Togglable>
       }

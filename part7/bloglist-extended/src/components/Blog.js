@@ -23,11 +23,11 @@ const Blog = () => {
   const dispatch = useDispatch()
   const match = useMatch('/blogs/:id')
   const navigate = useNavigate()
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState('')
   const blog = useSelector(state =>
     state
       .blogs
-      .find(b => b.id === match?.params.id)
+      .find(b => match && b.id === match.params.id)
   )
 
   const handleLike = () => dispatch(actionLike(blog))
@@ -58,8 +58,8 @@ const Blog = () => {
         Likes:&nbsp;{blog.likes}&nbsp;
           <button type='button' onClick={handleLike}>
           Like
-        </button>
-      </span>
+          </button>
+        </span>
         <br/>
         <span>Added by:&nbsp;{blog.user.name}</span>
         &nbsp;
@@ -86,7 +86,7 @@ const Blog = () => {
           Add Comment
         </button>
         <ul>
-          { blog.comments?.map((c, idx) => <li key={idx}>{c}</li>) }
+          { blog.comments.map((c, idx) => <li key={idx}>{c}</li>) }
         </ul>
       </div>
     </>

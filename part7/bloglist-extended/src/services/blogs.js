@@ -41,7 +41,7 @@ const deleteBlog = (id) => {
 
 const addComment = (comment, blogId) => {
   const request = axios.post(`${baseUrl}/${blogId}/comments`, { comment })
-  return request.then(response => response?.data)
+  return request.then(response => response && response.data)
 }
 
 const blogService = { getAll, setToken, create, update, deleteBlog, addComment }

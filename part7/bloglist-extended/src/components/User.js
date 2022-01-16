@@ -7,7 +7,7 @@ const User = () => {
   const user = useSelector(state =>
     state
       .users
-      .find(u => u.id === match?.params.id)
+      .find(u => match && u.id === match.params.id)
   )
 
   if (!user) return null

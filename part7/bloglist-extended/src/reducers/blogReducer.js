@@ -18,8 +18,8 @@ const blogReducer = (state = [], action) => {
   case 'ADD_COMMENT':
     return state.map(b =>
       b.id === action.data.blogId
-      ? { ...b, comments: b.comments.concat([action.data.comment]) }
-      : b
+        ? { ...b, comments: b.comments.concat([action.data.comment]) }
+        : b
     )
   default:
     return state
