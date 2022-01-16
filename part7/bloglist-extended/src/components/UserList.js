@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { Table } from 'react-bootstrap'
 
 const UserList = () => {
   const list = useSelector(state =>
@@ -11,36 +12,29 @@ const UserList = () => {
     }))
   )
 
-  const tableStyle = {
-    border: '1px dashed black',
-    padding: 10,
-    margin: 10,
-    textAlign: 'center'
-  }
-
   return (
     <>
-      <h3>All users</h3>
-      {
-        list.map((u) =>
-          <table key={u.id} style={tableStyle}>
-            <thead>
-              <tr>
-                <th style={tableStyle}>User</th>
-                <th style={tableStyle}>Blogs created</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style={tableStyle}>
-                  <Link to={`/users/${u.id}`}>{u.name}</Link>
-                </td>
-                <td style={tableStyle}>{u.blogCount}</td>
-              </tr>
-            </tbody>
-          </table>
-        )
-      }
+      <h3 className='text-center text-primary'>Users</h3>
+      <Table striped bordered hover>
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>User</th>
+          <th>Blogs created</th>
+        </tr>
+        </thead>
+        <tbody>
+        {
+          list.map((u, idx) =>
+            <tr key={u.id}>
+              <td>{idx + 1}</td>
+              <td><Link to={`/users/${u.id}`}>{u.name}</Link></td>
+              <td>{u.blogCount}</td>
+            </tr>
+          )
+        }
+        </tbody>
+      </Table>
     </>
   )
 }
