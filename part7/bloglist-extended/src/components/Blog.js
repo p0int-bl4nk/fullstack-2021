@@ -2,22 +2,16 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { actionAddComment, actionDeleteBlog, actionLike } from '../reducers/blogReducer'
 import { useNavigate, useMatch } from 'react-router-dom'
+import { Button, Form } from 'react-bootstrap'
 const Blog = () => {
   const styles = {
     blog: {
       border: '1px solid black',
       borderRadius: 5,
-      width: 'fit-content',
+      width: '100%',
       height: 'fit-content',
       background: 'lightblue',
       padding: 10,
-      margin: 10,
-    },
-    delete: {
-      border: '1px solid red',
-      borderRadius: 5,
-      background: 'red',
-      padding: 5,
     }
   }
   const dispatch = useDispatch()
@@ -55,36 +49,43 @@ const Blog = () => {
         <a href={blog.url}>{blog.url}</a>
         <br/>
         <span>
-        Likes:&nbsp;{blog.likes}&nbsp;
-          <button type='button' onClick={handleLike}>
-          Like
-          </button>
+          Likes:&nbsp;{blog.likes}&nbsp;
+          <Button
+            variant='info'
+            type='button'
+            onClick={handleLike}
+          >
+            Like
+          </Button>
         </span>
         <br/>
         <span>Added by:&nbsp;{blog.user.name}</span>
         &nbsp;
-        <button
+        <Button
+          variant='danger'
           type='button'
           onClick={handleDelete}
-          style={styles.delete}
-          className='deleteBtn'
         >
           Remove
-        </button>
+        </Button>
       </div>
       <div>
-        <input
-          type='text'
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-        />
-        <button
-          type='button'
-          onClick={handleComment}
-          disabled={!comment}
-        >
-          Add Comment
-        </button>
+        <Form.Group>
+          <Form.Control
+            type="text"
+            placeholder="Enter Comment..."
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          />
+          <Button
+            variant='success'
+            type='button'
+            onClick={handleComment}
+            disabled={!comment}
+          >
+            Comment
+          </Button>
+        </Form.Group>
         <ul>
           { blog.comments.map((c, idx) => <li key={idx}>{c}</li>) }
         </ul>
