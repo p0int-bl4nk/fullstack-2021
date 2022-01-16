@@ -57,8 +57,8 @@ const App = () => {
 
   return (
     <div className='container bg-light'>
-      <Notification />
       <Menu user={user} handleLogout={handleLogout}/>
+      <Notification />
       {
         (user && user.name)
         ? <AllRoutes />
