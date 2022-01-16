@@ -61,8 +61,8 @@ const App = () => {
       <Notification />
       {
         (user && user.name)
-        ? <AllRoutes />
-        : <Login />
+          ? <AllRoutes />
+          : <Login />
       }
     </div>
   )

@@ -17,22 +17,22 @@ const UserList = () => {
       <h3 className='text-center text-primary'>Users</h3>
       <Table striped bordered hover>
         <thead>
-        <tr>
-          <th>#</th>
-          <th>User</th>
-          <th>Blogs created</th>
-        </tr>
+          <tr>
+            <th>#</th>
+            <th>User</th>
+            <th>Blogs created</th>
+          </tr>
         </thead>
         <tbody>
-        {
-          list.map((u, idx) =>
-            <tr key={u.id}>
-              <td>{idx + 1}</td>
-              <td><Link to={`/users/${u.id}`}>{u.name}</Link></td>
-              <td>{u.blogCount}</td>
-            </tr>
-          )
-        }
+          {
+            list.map((u, idx) =>
+              <tr key={u.id}>
+                <td>{idx + 1}</td>
+                <td><Link to={`/users/${u.id}`}>{u.name}</Link></td>
+                <td>{u.blogCount}</td>
+              </tr>
+            )
+          }
         </tbody>
       </Table>
     </>
