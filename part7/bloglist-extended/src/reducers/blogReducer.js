@@ -15,6 +15,12 @@ const blogReducer = (state = [], action) => {
     return state.filter(b => b.id !== action.id)
   case 'LOGOUT':
     return []
+  case 'ADD_COMMENT':
+    return state.map(b =>
+      b.id === action.data.blogId
+      ? { ...b, comments: b.comments.concat([action.data.comment]) }
+      : b
+    )
   default:
     return state
   }
@@ -92,6 +98,23 @@ export const actionLike = (blog) => {
       console.log(e)
       dispatch(actionShowNotification({
         type: 'error', message: 'Something went wrong! Blog could not be updated.'
+      }))
+    }
+  }
+}
+
+export const actionAddComment = (comment, blogId) => {
+  return async dispatch => {
+    try {
+      await blogService.addComment(comment, blogId)
+      dispatch({
+        type: 'ADD_COMMENT',
+        data: { comment, blogId }
+      })
+    } catch (e) {
+      console.log(e)
+      dispatch(actionShowNotification({
+        type: 'error', message: 'Something went wrong! Comment could not be added.'
       }))
     }
   }
