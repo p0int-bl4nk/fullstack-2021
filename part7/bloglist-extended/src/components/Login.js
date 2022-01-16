@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { actionLogin } from '../reducers/userReducer'
+import { Button, Form } from 'react-bootstrap'
 
 const Login = () => {
   const [username, setUsername] = useState('')
@@ -16,44 +17,44 @@ const Login = () => {
     dispatch(actionLogin(userInfo))
     setUsername('')
     setPassword('')
-    /*try {
-      const loginResponse = await loginService.login(userInfo)
-      setUsername('')
-      setPassword('')
-      blogService.setToken(loginResponse.token)
-      window.localStorage.setItem('currentUserInfo', JSON.stringify(loginResponse))
-      setUser(loginResponse)
-    } catch (e) {
-      handleNotification({
-        message: e.response.data.error,
-        type: 'error',
-      })
-      console.log('login failed error:', e)
-    }*/
+  }
+
+  const handleReset = (e) => {
+    e.preventDefault()
+    setUsername('')
+    setPassword('')
   }
 
   return (
     <>
       <h3>Log in to the Application</h3>
-      <form onSubmit={handleLogin}>
-        <label htmlFor='username'>Username: </label>
-        <input
-          type="text"
-          name="username"
-          value={username}
-          onChange={({ target }) => setUsername(target.value)}
-        />
-        <br/>
-        <label htmlFor='password'>Password: </label>
-        <input
-          type='password'
-          name='password'
-          value={password}
-          onChange={({ target }) => setPassword(target.value)}
-        />
-        <br/>
-        <button type='submit'>Login</button>
-      </form>
+      <Form onSubmit={handleLogin} onReset={handleReset}>
+        <Form.Group className="mb-3" controlId="username">
+          <Form.Label>Username</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter username"
+            value={username}
+            onChange={({ target }) => setUsername(target.value)}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="password">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={({ target }) => setPassword(target.value)}
+          />
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Log In
+        </Button>
+        <Button variant="secondary" type="reset">
+          Reset
+        </Button>
+      </Form>
     </>
   )
 }

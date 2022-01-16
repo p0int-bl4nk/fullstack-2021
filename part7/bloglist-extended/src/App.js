@@ -6,7 +6,6 @@ import { actionInitBlogs } from './reducers/blogReducer'
 import { actionInitUsers } from './reducers/usersReducer'
 import Notification from './components/Notification'
 import Login from './components/Login'
-import Togglable from './components/Togglable'
 import NewBlog from './components/NewBlog'
 import BlogList from './components/BlogList'
 import UserList from './components/UserList'
@@ -30,37 +29,40 @@ const App = () => {
 
   const handleLogout = () => dispatch(actionLogout())
 
+  const AllRoutes = () => (
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <>
+            <NewBlog/>
+            <BlogList/>
+          </>
+        }
+      />
+      <Route
+        path="/users"
+        element={<UserList/>}
+      />
+      <Route
+        path="/users/:id"
+        element={<User/>}
+      />
+      <Route
+        path="/blogs/:id"
+        element={<Blog/>}
+      />
+    </Routes>
+  )
+
   return (
     <div className='container bg-light'>
       <Notification />
       <Menu user={user} handleLogout={handleLogout}/>
       {
-        user && user.name &&
-        <>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <>
-                  <NewBlog />
-                  <BlogList/>
-                </>
-              }
-            />
-            <Route
-              path="/users"
-              element={<UserList/>}
-            />
-            <Route
-              path="/users/:id"
-              element={<User/>}
-            />
-            <Route
-              path="/blogs/:id"
-              element={<Blog/>}
-            />
-          </Routes>
-        </>
+        (user && user.name)
+        ? <AllRoutes />
+        : <Login />
       }
     </div>
   )
@@ -78,16 +80,13 @@ const Menu = ({ user, handleLogout }) => {
           </Nav>
           <Navbar.Brand>
             {
-              user && user.name
-                ? <span>
-                    {user.name} logged in.&nbsp;
-                    <Button variant='secondary' type="button" onClick={handleLogout}>
-                      Logout
-                    </Button>
-                </span>
-                : <Togglable buttonLabel={'Log In'}>
-                  <Login/>
-                </Togglable>
+              user && user.name &&
+              <span>
+                {user.name} logged in.&nbsp;
+                <Button variant="secondary" type="button" onClick={handleLogout}>
+                  Logout
+                </Button>
+              </span>
             }
           </Navbar.Brand>
         </Navbar.Collapse>
