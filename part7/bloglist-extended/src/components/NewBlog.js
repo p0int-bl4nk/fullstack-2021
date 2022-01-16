@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { actionAddBlog } from '../reducers/blogReducer'
+import { Button, Form, Modal } from 'react-bootstrap'
 
-const NewBlog = ({ closeForm }) => {
+const NewBlog = () => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
@@ -15,49 +16,74 @@ const NewBlog = ({ closeForm }) => {
       author,
       url
     }
+    dispatch(actionAddBlog(newBlog))
+    handleReset()
+  }
 
+  const handleReset = () => {
     setAuthor('')
     setTitle('')
     setUrl('')
-
-    dispatch(actionAddBlog(newBlog))
-    closeForm()
+    close()
   }
 
+  const [addNew, setAddNew] = useState(false)
+  const open = () => setAddNew(true)
+  const close = () => setAddNew(false)
+
   return (
-    <div>
-      <h4>Create new</h4>
-      <form onSubmit={handleSubmit} id='createBlog'>
-        <label htmlFor='title'>Title: </label>
-        <input
-          type='text'
-          name='title'
-          id='title'
-          value={title}
-          onChange={({ target }) => setTitle(target.value)}
-        />
-        <br/>
-        <label htmlFor='author'>Author: </label>
-        <input
-          type='text'
-          name='author'
-          id='author'
-          value={author}
-          onChange={({ target }) => setAuthor(target.value)}
-        />
-        <br/>
-        <label htmlFor='url'>Url: </label>
-        <input
-          type='url'
-          name='url'
-          id='url'
-          value={url}
-          onChange={({ target }) => setUrl(target.value)}
-        />
-        <br/>
-        <button type='submit'>Create</button>
-      </form>
-    </div>
+    <>
+      <br/>
+      <Button variant='success' type='button' onClick={open}>
+        Create New
+      </Button>
+      <Modal show={addNew} dialogClassName='modal-30' onHide={close}>
+        <Modal.Header closeButton>
+          <Modal.Title>Create New Blog</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="title">
+              <Form.Label>Title</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Title"
+                value={title}
+                onChange={({ target }) => setTitle(target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="author">
+              <Form.Label>Author</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Author"
+                value={author}
+                onChange={({ target }) => setAuthor(target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="url">
+              <Form.Label>Url</Form.Label>
+              <Form.Control
+                type="url"
+                placeholder="Enter Url"
+                value={url}
+                onChange={({ target }) => setUrl(target.value)}
+              />
+            </Form.Group>
+
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+            &nbsp;
+            <Button variant='danger' type='reset' onClick={handleReset}>
+              Cancel
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
+    </>
   )
 }
 

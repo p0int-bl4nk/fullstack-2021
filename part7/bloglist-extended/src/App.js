@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, Route, Routes } from 'react-router-dom'
 import { actionGetUserFromLocalStorage, actionLogout } from './reducers/userReducer'
@@ -12,11 +12,11 @@ import BlogList from './components/BlogList'
 import UserList from './components/UserList'
 import User from './components/User'
 import Blog from './components/Blog'
+import { Button, Container, Nav, Navbar } from 'react-bootstrap'
 
 const App = () => {
   const user = useSelector(state => state.user)
   const dispatch = useDispatch()
-  const blogFormRef = useRef()
   useEffect(() => {
     dispatch(actionGetUserFromLocalStorage())
   }, [])
@@ -31,21 +31,18 @@ const App = () => {
   const handleLogout = () => dispatch(actionLogout())
 
   return (
-    <div>
+    <div className='container bg-light'>
       <Notification />
       <Menu user={user} handleLogout={handleLogout}/>
       {
         user && user.name &&
         <>
-          <h2>Blogs</h2>
           <Routes>
             <Route
               path="/"
               element={
                 <>
-                  <Togglable buttonLabel={'Create a blog'} ref={blogFormRef}>
-                    <NewBlog closeForm={() => blogFormRef.current.toggleVisibility()}/>
-                  </Togglable>
+                  <NewBlog />
                   <BlogList/>
                 </>
               }
@@ -70,29 +67,32 @@ const App = () => {
 }
 
 const Menu = ({ user, handleLogout }) => {
-  const padding = {
-    paddingRight: 5
-  }
-
   return (
-    <div>
-      <Link style={padding} to='/'>Blogs</Link>
-      <Link style={padding} to='/users'>Users</Link>
-      &nbsp;
-      {
-        user && user.name
-          ? <span>
-            { user.name } logged in.
-            <button type="button" onClick={handleLogout}>
-              Logout
-            </button>
-          </span>
-          : <Togglable buttonLabel={'Log In'}>
-            <Login/>
-          </Togglable>
-      }
-
-    </div>
+    <Navbar bg="info" expand="lg">
+      <Container>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Link to='/' className='p-3 nav-link'>Blogs</Link>
+            <Link to='/users' className='p-3 nav-link'>Users</Link>
+          </Nav>
+          <Navbar.Brand>
+            {
+              user && user.name
+                ? <span>
+                    {user.name} logged in.&nbsp;
+                    <Button variant='secondary' type="button" onClick={handleLogout}>
+                      Logout
+                    </Button>
+                </span>
+                : <Togglable buttonLabel={'Log In'}>
+                  <Login/>
+                </Togglable>
+            }
+          </Navbar.Brand>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   )
 }
 

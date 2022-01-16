@@ -1,30 +1,30 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { ListGroup } from 'react-bootstrap'
 
 const BlogList = () => {
   const allBlogs = useSelector(state => state.blogs)
 
-  const style = {
-    border: '1px solid black',
-    padding: 10,
-    margin: 10
-  }
-
   return (
     <div>
-      <ul>
+      <ListGroup as="ul">
         {
           allBlogs.map(blog =>
-            <li key={blog.id} style={style}>
-              <Link to={`/blogs/${blog.id}`}>
-                {blog.title}
-              </Link>
-              <br/>
-            </li>
+            <ListGroup.Item
+              key={blog.id}
+              as="li"
+              className="d-flex justify-content-between align-items-start"
+            >
+              <div className="ms-2 me-auto">
+                <Link to={`/blogs/${blog.id}`}>
+                  {blog.title}
+                </Link>
+              </div>
+            </ListGroup.Item>
           )
         }
-      </ul>
+      </ListGroup>
     </div>
   )
 }
