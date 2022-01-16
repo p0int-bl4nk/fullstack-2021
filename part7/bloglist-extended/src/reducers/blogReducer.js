@@ -13,6 +13,8 @@ const blogReducer = (state = [], action) => {
     )
   case 'DELETE_BLOG':
     return state.filter(b => b.id !== action.id)
+  case 'LOGOUT':
+    return []
   default:
     return state
   }

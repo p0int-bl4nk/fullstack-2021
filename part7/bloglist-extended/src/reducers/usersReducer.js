@@ -12,6 +12,8 @@ const usersReducer = (state = [], action) => {
         ? { ...u, blogs: u.blogs.concat(action.data) }
         : u
     })
+  case 'LOGOUT':
+    return []
   default:
     return state
   }

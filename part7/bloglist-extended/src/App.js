@@ -7,11 +7,10 @@ import NewBlog from './components/NewBlog'
 import ListBlogs from './components/ListBlogs'
 import { actionGetUserFromLocalStorage, actionLogout } from './reducers/userReducer'
 import { actionInitBlogs } from './reducers/blogReducer'
-import {
-  Routes, Route, Link
-} from 'react-router-dom'
+import { Link, Route, Routes } from 'react-router-dom'
 import UserList from './components/UserList'
 import { actionInitUsers } from './reducers/usersReducer'
+import User from './components/User'
 
 const App = () => {
   const user = useSelector(state => state.user)
@@ -47,25 +46,29 @@ const App = () => {
                 Logout
               </button>
             </p>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <>
+                    <Togglable buttonLabel={'Create a blog'} ref={blogFormRef}>
+                      <NewBlog closeForm={() => blogFormRef.current.toggleVisibility()}/>
+                    </Togglable>
+                    <ListBlogs/>
+                  </>
+                }
+              />
+              <Route
+                path='/users'
+                element={<UserList/>}
+              />
+              <Route
+                path='/users/:id'
+                element={<User/>}
+              />
+            </Routes>
           </>
       }
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <Togglable buttonLabel={'Create a blog'} ref={blogFormRef}>
-                <NewBlog closeForm={() => blogFormRef.current.toggleVisibility()}/>
-              </Togglable>
-              <ListBlogs/>
-            </>
-          }
-        />
-        <Route
-          path='/users'
-          element={<UserList />}
-        />
-      </Routes>
     </div>
   )
 }
