@@ -4,13 +4,14 @@ import Login from './components/Login'
 import Togglable from './components/Togglable'
 import React, { useEffect, useRef } from 'react'
 import NewBlog from './components/NewBlog'
-import ListBlogs from './components/ListBlogs'
+import BlogList from './components/BlogList'
 import { actionGetUserFromLocalStorage, actionLogout } from './reducers/userReducer'
 import { actionInitBlogs } from './reducers/blogReducer'
 import { Link, Route, Routes } from 'react-router-dom'
 import UserList from './components/UserList'
 import { actionInitUsers } from './reducers/usersReducer'
 import User from './components/User'
+import Blog from './components/Blog'
 
 const App = () => {
   const user = useSelector(state => state.user)
@@ -54,7 +55,7 @@ const App = () => {
                     <Togglable buttonLabel={'Create a blog'} ref={blogFormRef}>
                       <NewBlog closeForm={() => blogFormRef.current.toggleVisibility()}/>
                     </Togglable>
-                    <ListBlogs/>
+                    <BlogList/>
                   </>
                 }
               />
@@ -65,6 +66,10 @@ const App = () => {
               <Route
                 path='/users/:id'
                 element={<User/>}
+              />
+              <Route
+                path='/blogs/:id'
+                element={<Blog/>}
               />
             </Routes>
           </>

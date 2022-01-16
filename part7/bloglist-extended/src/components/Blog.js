@@ -1,8 +1,8 @@
 import React from 'react'
-import Togglable from './Togglable'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { actionDeleteBlog, actionLike } from '../reducers/blogReducer'
-const Blog = ({ blog }) => {
+import { useNavigate, useMatch } from 'react-router-dom'
+const Blog = () => {
   const styles = {
     blog: {
       border: '1px solid black',
@@ -21,6 +21,13 @@ const Blog = ({ blog }) => {
     }
   }
   const dispatch = useDispatch()
+  const match = useMatch('/blogs/:id')
+  const navigate = useNavigate()
+  const blog = useSelector(state =>
+    state
+      .blogs
+      .find(b => b.id === match?.params.id)
+  )
 
   const handleLike = () => dispatch(actionLike(blog))
 
@@ -29,31 +36,26 @@ const Blog = ({ blog }) => {
       window.confirm(`Remove blog '${blog.title}' by ${blog.author}?`)
     ) {
       dispatch(actionDeleteBlog(blog.id))
+      navigate('/')
     }
   }
 
+  if (!blog) return null
+
   return (
-    <li style={styles.blog}>
-      <div className='blog' >
-        <span  id={`${blog.id}_heading`} className='header'>
-          {blog.title}, <em>by</em> <strong>{blog.author}</strong>
-        </span>
-        <Togglable buttonLabel='View' closeButtonLabel='Hide'>
-          <>
-            <span  id={`${blog.id}_url`} className='url'>
-              <em>{blog.url}</em>
-            </span>
-            <br/>
-            <span id={`${blog.id}_like`} className='likes'>
-              Likes: {blog.likes}{' '}
-              <button type='button' onClick={handleLike}>
-                Like
-              </button>
-            </span>
-            <br/>
-          </>
-        </Togglable>
-      </div>
+    <div style={styles.blog}>
+      <h3>{blog.title}, <em>by</em> <strong>{blog.author}</strong></h3>
+      <a href={blog.url}>{blog.url}</a>
+      <br/>
+      <span>
+        Likes:&nbsp;{blog.likes}&nbsp;
+        <button type='button' onClick={handleLike}>
+          Like
+        </button>
+      </span>
+      <br/>
+      <span>Added by:&nbsp;{blog.user.name}</span>
+      &nbsp;
       <button
         type='button'
         onClick={handleDelete}
@@ -62,7 +64,7 @@ const Blog = ({ blog }) => {
       >
         Remove
       </button>
-    </li>
+    </div>
   )
 }
 
