@@ -1,4 +1,4 @@
-import { Link, useMatch } from 'react-router-dom'
+import { useMatch } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import React from 'react'
 import { ListGroup } from 'react-bootstrap'
@@ -26,9 +26,7 @@ const User = () => {
               className="d-flex justify-content-between align-items-start"
             >
               <div className="ms-2 me-auto">
-                <Link to={`/blogs/${blog.id}`}>
-                  {blog.title}
-                </Link>
+                {blog.title}
               </div>
             </ListGroup.Item>
           )
