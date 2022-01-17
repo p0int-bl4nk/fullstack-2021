@@ -109,19 +109,22 @@ describe('Blog app', function () {
         cy.createBlog({
           title: 'first title',
           author: 'first author',
-          url: 'http://localhost/first-url.com'
+          url: 'http://localhost/first-url.com',
+          likes: 5
         })
 
         cy.createBlog({
           title: 'second title',
           author: 'second author',
-          url: 'http://localhost/second-url.com'
+          url: 'http://localhost/second-url.com',
+          likes: 3
         })
 
         cy.createBlog({
           title: 'third title',
           author: 'third author',
-          url: 'http://localhost/third-url.com'
+          url: 'http://localhost/third-url.com',
+          likes: 10
         })
       })
 
@@ -169,10 +172,17 @@ describe('Blog app', function () {
       })
 
       it.only('blogs are ordered by number of likes, blog with the most likes being the first', function () {
-        cy.get('.viewButton')
-          .each((view) => {
-            view[0].click()
-            console.log('view', view);
+        const list = []
+        cy.get('li > .blog')
+          .each(l => {
+            const data = JSON.parse(l[0].dataset['blog'])
+            list.push(data.likes)
+          })
+          .then(() => {
+            const descendingSorted = list.every((l, idx) => {
+              return idx > 0 ? l < list[idx - 1] : true
+            })
+            expect(descendingSorted).to.equal(true)
           })
       })
     })

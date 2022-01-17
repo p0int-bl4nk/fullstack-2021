@@ -38,7 +38,7 @@ const Blog = ({ blog, handleLike, handleDelete }) => {
 
   return (
     <li style={styles.blog}>
-      <div className='blog' >
+      <div className='blog' data-blog={JSON.stringify({ likes: blog.likes })}>
         <span  id={`${blog.id}_heading`} className='header'>
           {blog.title}, <em>by</em> <strong>{blog.author}</strong>
         </span>
